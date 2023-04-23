@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './Chat.css';
 
 interface Message {
-  author: string;
+  authorId: string;
+  authorName: string;
   content: string;
 }
 
@@ -40,7 +42,8 @@ const Chat: React.FC = () => {
 
     const message: Message = {
       content: inputMessage,
-      author: 'User',
+      authorName: 'User',
+      authorId: '',
     };
 
     if (websocket.current) {
@@ -49,14 +52,25 @@ const Chat: React.FC = () => {
     setInputMessage('');
   };
 
+  const Message = ({ content, authorName, authorId }: Message) => {
+    return (
+      <li key={authorId} className={`message-item ${authorId === "me" ? "me" : "others"}`}>
+        <div className="message-avatar">
+          <img src={`https://i.pravatar.cc/300?u=${authorId}`} alt="avatar" />
+        </div>
+        <div className="message-content">
+          <b>{authorName}: </b>
+          {content}
+        </div>
+      </li>
+    )
+  };
+
   return (
     <div>
-      <ul>
-        {messages.map((message, index) => (
-          <li key={index}>
-            <b>{message.author}: </b>
-            {message.content}
-          </li>
+      <ul className="messages-list">
+        {messages.map((message) => (
+          <Message key={message.authorId} authorId={message.authorId} authorName='' content={message.content} />
         ))}
       </ul>
       <form onSubmit={sendMessage}>

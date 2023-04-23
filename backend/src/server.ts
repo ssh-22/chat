@@ -2,9 +2,11 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server, OPEN as WebSocketOpen } from 'ws';
 // import { Configuration, OpenAIApi } from "openai";
+import { v4 as uuidv4 } from 'uuid';
 
 interface Message {
-  author: string;
+  authorId: string;
+  authorName: string;
   content: string;
 }
 
@@ -39,6 +41,7 @@ const broadcastMessage = (message: Message): void => {
 };
 
 wss.on('connection', (ws) => {
+  const userId = uuidv4();
   console.log('WebSocket connected');
 
   ws.on('message', async (messageJson: string) => {
@@ -48,6 +51,7 @@ wss.on('connection', (ws) => {
     // const gptResponse = await chatGptApi(message.content);
     // ws.send(JSON.stringify({ author: 'ChatGPT', content: gptResponse }));
 
+    message.authorId = userId;
     broadcastMessage(message);
   });
 
