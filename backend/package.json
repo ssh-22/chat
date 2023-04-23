@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,9 @@
     "express": "^4.18.2",
     "openai": "^3.2.1",
     "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
   }
 }
