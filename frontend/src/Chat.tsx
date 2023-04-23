@@ -7,9 +7,15 @@ interface Message {
   content: string;
 }
 
+interface UserData {
+  type: string;
+  userId: string;
+}
+
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
   const websocket = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -20,8 +26,13 @@ const Chat: React.FC = () => {
     };
 
     websocket.current.onmessage = (event) => {
-      const message = JSON.parse(event.data) as Message;
-      setMessages((prevMessages) => [...prevMessages, message]);
+
+      const data = JSON.parse(event.data);
+      if (data.type) {
+        setUserId(data.userId)
+      } else {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      }
     };
 
     websocket.current.onclose = () => {
@@ -53,33 +64,37 @@ const Chat: React.FC = () => {
   };
 
   const Message = ({ content, authorName, authorId }: Message) => {
+    const isMe = authorId === userId;
     return (
-      <li key={authorId} className={`message-item ${authorId === "me" ? "me" : "others"}`}>
-        <div className="message-avatar">
-          <img src={`https://i.pravatar.cc/300?u=${authorId}`} alt="avatar" />
-        </div>
-        <div className="message-content">
-          <b>{authorName}: </b>
-          {content}
-        </div>
+      <li key={authorId} className={`message-item ${isMe ? "me" : "others"}`}>
+        {!isMe && (
+          <div className="message-avatar">
+            <img
+              className="user-icon"
+              src={`https://i.pravatar.cc/300?u=${authorId}`}
+              alt="avatar"
+            />
+          </div>
+        )}
+        <div className="message-content">{content}</div>
       </li>
     )
   };
 
   return (
-    <div>
+    <div className='chat-container'>
       <ul className="messages-list">
-        {messages.map((message) => (
-          <Message key={message.authorId} authorId={message.authorId} authorName='' content={message.content} />
+        {messages.map((message, index) => (
+          <Message key={index} authorId={message.authorId} authorName='' content={message.content} />
         ))}
       </ul>
-      <form onSubmit={sendMessage}>
+      <form className='input-form' onSubmit={sendMessage}>
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
         />
-        <button type="submit">Send</button>
+        <button type="submit">送信</button>
       </form>
     </div>
   );
