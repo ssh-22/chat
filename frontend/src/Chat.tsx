@@ -26,10 +26,9 @@ const Chat: React.FC = () => {
     };
 
     websocket.current.onmessage = (event) => {
-
       const data = JSON.parse(event.data);
       if (data.type) {
-        setUserId(data.userId)
+        setUserId(data.userId);
       } else {
         setMessages((prevMessages) => [...prevMessages, data]);
       }
@@ -66,35 +65,40 @@ const Chat: React.FC = () => {
   const Message = ({ content, authorName, authorId }: Message) => {
     const isMe = authorId === userId;
     return (
-      <li key={authorId} className={`message-item ${isMe ? "me" : "others"}`}>
+      <li key={authorId} className={`message-item ${isMe ? 'me' : 'others'}`}>
         {!isMe && (
-          <div className="message-avatar">
+          <div className='message-avatar'>
             <img
-              className="user-icon"
+              className='user-icon'
               src={`https://i.pravatar.cc/300?u=${authorId}`}
-              alt="avatar"
+              alt='avatar'
             />
           </div>
         )}
-        <div className="message-content">{content}</div>
+        <div className='message-content'>{content}</div>
       </li>
-    )
+    );
   };
 
   return (
     <div className='chat-container'>
-      <ul className="messages-list">
+      <ul className='messages-list'>
         {messages.map((message, index) => (
-          <Message key={index} authorId={message.authorId} authorName='' content={message.content} />
+          <Message
+            key={index}
+            authorId={message.authorId}
+            authorName=''
+            content={message.content}
+          />
         ))}
       </ul>
       <form className='input-form' onSubmit={sendMessage}>
         <input
-          type="text"
+          type='text'
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
         />
-        <button type="submit">送信</button>
+        <button type='submit'>送信</button>
       </form>
     </div>
   );

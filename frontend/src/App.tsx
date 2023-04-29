@@ -4,7 +4,7 @@ import Chat from './Chat';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className='App'>
       <Chat />
     </div>
   );
