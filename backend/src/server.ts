@@ -29,7 +29,7 @@ wss.on('connection', (ws) => {
   const userId = uuidv4();
   console.log('WebSocket connected');
 
-  ws.send(JSON.stringify({type: 'userId', userId}))
+  ws.send(JSON.stringify({ type: 'userId', userId }));
 
   ws.on('message', async (messageJson: string) => {
     const message = JSON.parse(messageJson) as Message;
