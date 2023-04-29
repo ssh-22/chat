@@ -7,19 +7,22 @@ interface Message {
   content: string;
 }
 
+interface MessageProps extends Message {
+  userId: string | null;
+}
+
 interface UserData {
   type: string;
   userId: string;
 }
 
-const Chat: React.FC = () => {
+const useWebSocket = (url: string) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputMessage, setInputMessage] = useState('');
   const [userId, setUserId] = useState<string | null>(null);
   const websocket = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    websocket.current = new WebSocket('ws://localhost:3001');
+    websocket.current = new WebSocket(url);
 
     websocket.current.onopen = () => {
       console.log('WebSocket connected');
@@ -43,9 +46,45 @@ const Chat: React.FC = () => {
         websocket.current.close();
       }
     };
-  }, []);
+  }, [url]);
 
-  const sendMessage = (e: React.FormEvent) => {
+  const sendMessage = (message: Message) => {
+    if (websocket.current) {
+      websocket.current.send(JSON.stringify(message));
+    }
+  };
+
+  return { messages, userId, sendMessage };
+};
+
+const Message: React.FC<MessageProps> = ({
+  content,
+  authorName,
+  authorId,
+  userId,
+}) => {
+  const isMe = authorId === userId;
+  return (
+    <li className={`message-item ${isMe ? 'me' : 'others'}`}>
+      {!isMe && (
+        <div className='message-avatar'>
+          <img
+            className='user-icon'
+            src={`https://i.pravatar.cc/300?u=${authorId}`}
+            alt='avatar'
+          />
+        </div>
+      )}
+      <div className='message-content'>{content}</div>
+    </li>
+  );
+};
+
+const Chat: React.FC = () => {
+  const { messages, userId, sendMessage } = useWebSocket('ws://localhost:3001');
+  const [inputMessage, setInputMessage] = useState('');
+
+  const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (inputMessage.trim() === '') return;
@@ -56,45 +95,20 @@ const Chat: React.FC = () => {
       authorId: '',
     };
 
-    if (websocket.current) {
-      websocket.current.send(JSON.stringify(message));
-    }
+    sendMessage(message);
     setInputMessage('');
-  };
-
-  const Message = ({ content, authorName, authorId }: Message) => {
-    const isMe = authorId === userId;
-    return (
-      <li key={authorId} className={`message-item ${isMe ? 'me' : 'others'}`}>
-        {!isMe && (
-          <div className='message-avatar'>
-            <img
-              className='user-icon'
-              src={`https://i.pravatar.cc/300?u=${authorId}`}
-              alt='avatar'
-            />
-          </div>
-        )}
-        <div className='message-content'>{content}</div>
-      </li>
-    );
   };
 
   return (
     <div className='chat-container' data-testid='chat-container'>
       <ul className='messages-list'>
         {messages.map((message, index) => (
-          <Message
-            key={index}
-            authorId={message.authorId}
-            authorName=''
-            content={message.content}
-          />
+          <Message key={index} {...message} userId={userId} />
         ))}
       </ul>
       <form
         className='input-form'
-        onSubmit={sendMessage}
+        onSubmit={handleSendMessage}
         data-testid='input-form'
       >
         <input
@@ -104,7 +118,7 @@ const Chat: React.FC = () => {
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
-              sendMessage(e);
+              handleSendMessage(e);
             }
           }}
           data-testid='input'
