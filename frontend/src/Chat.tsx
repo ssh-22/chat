@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface Message {
   authorId: string;
@@ -112,7 +112,7 @@ const Chat: React.FC = () => {
           <h1 className='chat-title'>チャット</h1>
           <div className='header-actions'>
             <button className='call-button'>
-              <FontAwesomeIcon icon={faPhone} />
+              <FontAwesomeIcon icon={faPhone} color='#4f83e1' size='lg' />
             </button>
           </div>
         </header>
@@ -138,7 +138,9 @@ const Chat: React.FC = () => {
             }}
             data-testid='input'
           />
-          <button type='submit'>送信</button>
+          <button type='submit'>
+            <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+          </button>
         </form>
       </div>
     </div>
