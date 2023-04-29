@@ -1,4 +1,32 @@
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+}
+
+.chat-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.call-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #4f83e1;
+  padding: 0;
+  margin: 0;
+}
+
 .chat-container {
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   width: 390px;
@@ -29,7 +57,8 @@
 .input-form {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  flex-shrink: 0;
+  background-color: white;
 }
 
 input[type='text'] {
@@ -38,6 +67,7 @@ input[type='text'] {
   border-radius: 4px;
   padding: 0 10px;
   font-size: 14px;
+  background-color: #f3efef;
 }
 
 button[type='submit'] {
@@ -59,8 +89,6 @@ button[type='submit']:hover {
   flex: 1;
   overflow-y: scroll;
   list-style-type: none;
-  padding: 0;
-  margin: 0;
 }
 
 .message-item {
