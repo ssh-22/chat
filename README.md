@@ -22,6 +22,11 @@ If you don't have the correct version of Node.js installed, you can download it 
 
 Once the app is installed, users can use it to have one-on-one or group conversations, as well as voice and video calls. The UI is designed to resemble the LINE chat app.
 
+<div>
+    <img width="390" alt="React_App" src="https://user-images.githubusercontent.com/50019567/235284204-0d2ad869-c1a5-4027-9dce-3fea38a3167d.png">
+    <img width="389" alt="React_App1" src="https://user-images.githubusercontent.com/50019567/235284209-b615eba9-1c63-4675-b7cf-b22c729ba901.png">
+</div>
+
 ## Contributions
 
 Contributions to the app are welcome. To contribute, please follow these steps:
