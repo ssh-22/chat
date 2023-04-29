@@ -1,7 +1,9 @@
 import express from 'express';
-import { createServer } from 'http';
-import { Server, OPEN as WebSocketOpen } from 'ws';
+import http from 'http';
+import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
+
+require('dotenv').config();
 
 interface Message {
   authorId: string;
@@ -9,17 +11,19 @@ interface Message {
   content: string;
 }
 
-require('dotenv').config();
 const app = express();
-const server = createServer(app);
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
-server.listen(3001, () => console.log('Server listening on port 3001'));
+const PORT = 3001;
 
-const wss = new Server({ server });
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
 
 const broadcastMessage = (message: Message): void => {
   wss.clients.forEach((client) => {
-    if (client.readyState === WebSocketOpen) {
+    if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(message));
     }
   });
