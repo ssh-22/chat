@@ -81,7 +81,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className='chat-container'>
+    <div className='chat-container' data-testid='chat-container'>
       <ul className='messages-list'>
         {messages.map((message, index) => (
           <Message
@@ -92,11 +92,22 @@ const Chat: React.FC = () => {
           />
         ))}
       </ul>
-      <form className='input-form' onSubmit={sendMessage}>
+      <form
+        className='input-form'
+        onSubmit={sendMessage}
+        data-testid='input-form'
+      >
         <input
           type='text'
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              sendMessage(e);
+            }
+          }}
+          data-testid='input'
         />
         <button type='submit'>送信</button>
       </form>
