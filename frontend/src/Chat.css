@@ -89,6 +89,8 @@ button[type='submit']:hover {
   flex: 1;
   overflow-y: scroll;
   list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .message-item {
