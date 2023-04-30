@@ -1,4 +1,3 @@
-import express from 'express';
 import http from 'http';
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,8 +10,6 @@ export interface Message {
   authorName: string;
   content: string;
 }
-
-const app = express();
 
 const broadcastMessage = (wss: WebSocket.Server, message: Message): void => {
   wss.clients.forEach((client) => {
@@ -44,7 +41,7 @@ export const startServer = (
     });
 
     ws.on('close', () => {
-      console.log('WebSocket disconnected');
+      // console.log('WebSocket disconnected');
     });
   });
 
@@ -55,7 +52,3 @@ export const startServer = (
     }
   });
 };
-
-const PORT = 3001;
-const server = http.createServer(app);
-startServer(server, PORT);
