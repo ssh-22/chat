@@ -106,43 +106,41 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className='chat-container' data-testid='chat-container'>
-        <header className='chat-header'>
-          <h1 className='chat-title'>チャット</h1>
-          <div className='header-actions'>
-            <button className='call-button'>
-              <FontAwesomeIcon icon={faPhone} color='#4f83e1' size='lg' />
-            </button>
-          </div>
-        </header>
-        <ul className='messages-list'>
-          {messages.map((message, index) => (
-            <Message key={index} {...message} userId={userId} />
-          ))}
-        </ul>
-        <form
-          className='input-form'
-          onSubmit={handleSendMessage}
-          data-testid='input-form'
-        >
-          <input
-            type='text'
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage(e);
-              }
-            }}
-            data-testid='input'
-          />
-          <button type='submit' data-testid='submit'>
-            <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+    <div className='chat-container' data-testid='chat-container'>
+      <header className='chat-header'>
+        <h1 className='chat-title'>チャット</h1>
+        <div className='header-actions'>
+          <button className='call-button'>
+            <FontAwesomeIcon icon={faPhone} color='#4f83e1' size='lg' />
           </button>
-        </form>
-      </div>
+        </div>
+      </header>
+      <ul className='messages-list'>
+        {messages.map((message, index) => (
+          <Message key={index} {...message} userId={userId} />
+        ))}
+      </ul>
+      <form
+        className='input-form'
+        onSubmit={handleSendMessage}
+        data-testid='input-form'
+      >
+        <input
+          type='text'
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e);
+            }
+          }}
+          data-testid='input'
+        />
+        <button type='submit' data-testid='submit'>
+          <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+        </button>
+      </form>
     </div>
   );
 };
