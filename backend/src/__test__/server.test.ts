@@ -32,14 +32,14 @@ const waitForMessage = (socket: WebSocket): Promise<string> => {
   });
 };
 
-test('ユーザーが接続したときにIDが割り当てられる', async () => {
+test('Should assign an ID when a user connects', async () => {
   const message = await waitForMessage(client);
   const parsedMessage = JSON.parse(message);
   expect(parsedMessage.type).toBe('userId');
   expect(parsedMessage.userId).toBeTruthy();
 });
 
-test('すべてのクライアントにメッセージがブロードキャストされる', (done) => {
+test('Should broadcast a message to all clients', (done) => {
   const client2 = new WebSocket(`ws://localhost:${testPort}`);
   const testMessage: Message = {
     authorId: '',

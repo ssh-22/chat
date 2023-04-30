@@ -2,7 +2,8 @@ import http from 'http';
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 export interface Message {
   type?: string;
@@ -41,6 +42,8 @@ export const startServer = (
     });
 
     ws.on('close', () => {
+      // https://github.com/ssh-22/chat/issues/15
+      // TODO: ws.closeにconsole.logがあるとテストが落ちるのでコメントアウト
       // console.log('WebSocket disconnected');
     });
   });
