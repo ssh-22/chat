@@ -27,7 +27,8 @@
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "fmt": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json}'"
+    "fmt": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json}'",
+    "lint": "eslint . --ext .ts && prettier --check '**/*.{js,jsx,ts,tsx,css,md,json}'"
   },
   "eslintConfig": {
     "extends": [
@@ -67,7 +68,8 @@
     "@storybook/react-webpack5": "^7.0.6",
     "@storybook/testing-library": "^0.0.14-next.2",
     "babel-plugin-named-exports-order": "^0.0.2",
-    "prettier": "2.8.8",
+    "eslint": "^8.39.0",
+    "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
     "storybook": "^7.0.6",
     "ts-jest": "^29.1.0",

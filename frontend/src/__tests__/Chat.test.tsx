@@ -35,12 +35,12 @@ describe('Chat', () => {
   });
 
   test('renders submit button', () => {
-    const submitButton = screen.getByText('送信');
+    const submitButton = screen.getByTestId('submit');
     expect(submitButton).toBeInTheDocument();
   });
 
   test('empty input field does not send message', () => {
-    const submitButton = screen.getByText('送信');
+    const submitButton = screen.getByTestId('input');
     userEvent.click(submitButton);
     expect(screen.queryByText('User:')).not.toBeInTheDocument();
   });

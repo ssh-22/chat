@@ -138,7 +138,7 @@ const Chat: React.FC = () => {
             }}
             data-testid='input'
           />
-          <button type='submit'>
+          <button type='submit' data-testid='submit'>
             <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
           </button>
         </form>
