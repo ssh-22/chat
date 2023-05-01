@@ -83,9 +83,19 @@ const Message: React.FC<MessageProps> = ({
 };
 
 const Chat: React.FC = () => {
+  const messageListRef = useRef<HTMLUListElement>(null);
+  const [_previousScrollTop, setPreviousScrollTop] = useState<
+    number | undefined
+  >(undefined);
   const { messages, userId, sendMessage } = useWebSocket('ws://localhost:3001');
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
+
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,9 +107,9 @@ const Chat: React.FC = () => {
       authorName: 'User',
       authorId: '',
     };
-
     sendMessage(message);
     setInputMessage('');
+    setPreviousScrollTop(messageListRef.current?.scrollTop);
   };
 
   const handleInputMessageChange = (
@@ -120,7 +130,7 @@ const Chat: React.FC = () => {
           </button>
         </div>
       </header>
-      <ul className='messages-list'>
+      <ul className='messages-list' ref={messageListRef}>
         {messages.map((message, index) => (
           <Message key={index} {...message} userId={userId} />
         ))}
