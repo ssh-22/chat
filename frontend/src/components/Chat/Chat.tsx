@@ -97,6 +97,20 @@ const Chat: React.FC = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
 
