@@ -85,6 +85,7 @@ const Message: React.FC<MessageProps> = ({
 const Chat: React.FC = () => {
   const { messages, userId, sendMessage } = useWebSocket('ws://localhost:3001');
   const [inputMessage, setInputMessage] = useState('');
+  const [rows, setRows] = useState(1);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,8 +102,12 @@ const Chat: React.FC = () => {
     setInputMessage('');
   };
 
-  const handleCameraButtonClick = () => {
-    console.log('called');
+  const handleInputMessageChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setInputMessage(e.target.value);
+    const numLines = e.target.value.split('\n').length;
+    setRows(numLines > 9 ? 9 : numLines);
   };
 
   return (
@@ -125,17 +130,17 @@ const Chat: React.FC = () => {
         onSubmit={handleSendMessage}
         data-testid='input-form'
       >
-        <input
-          type='text'
+        <textarea
           value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
+          onChange={handleInputMessageChange}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
               handleSendMessage(e);
             }
           }}
-          data-testid='input'
+          data-testid='textarea'
+          rows={rows}
         />
         <button type='submit' data-testid='submit'>
           <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />

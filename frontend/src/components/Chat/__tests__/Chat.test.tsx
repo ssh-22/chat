@@ -29,9 +29,9 @@ describe('Chat', () => {
     expect(inputForm).toBeInTheDocument();
   });
 
-  test('renders input field', () => {
-    const inputField = screen.getByTestId('input');
-    expect(inputField).toBeInTheDocument();
+  test('renders textarea', () => {
+    const textArea = screen.getByTestId('textarea');
+    expect(textArea).toBeInTheDocument();
   });
 
   test('renders submit button', () => {
@@ -39,17 +39,17 @@ describe('Chat', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  test('empty input field does not send message', () => {
-    const submitButton = screen.getByTestId('input');
+  test('empty textarea does not send message', () => {
+    const submitButton = screen.getByTestId('textarea');
     userEvent.click(submitButton);
     expect(screen.queryByText('User:')).not.toBeInTheDocument();
   });
 
-  test('input field accepts input', async () => {
-    const inputField = screen.getByTestId('input');
+  test('textarea accepts input', async () => {
+    const textArea = screen.getByTestId('textarea');
     const testMessage = 'Hello, world!';
 
-    fireEvent.change(inputField, { target: { value: testMessage } });
+    fireEvent.change(textArea, { target: { value: testMessage } });
 
     mockServer.on('connection', (socket) => {
       socket.send(
@@ -57,8 +57,8 @@ describe('Chat', () => {
       );
     });
 
-    fireEvent.keyDown(inputField, { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(textArea, { key: 'Enter', code: 'Enter' });
 
-    await waitFor(() => expect(inputField).toHaveValue(''));
+    await waitFor(() => expect(textArea).toHaveValue(''));
   });
 });
