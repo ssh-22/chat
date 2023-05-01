@@ -3,8 +3,9 @@ import './App.css';
 import Chat from './components/Chat/Chat';
 
 const App: React.FC = () => {
+  const height = `${window.innerHeight - 25}px`;
   return (
-    <div className='App'>
+    <div className='App' style={{ height }}>
       <Chat />
     </div>
   );
