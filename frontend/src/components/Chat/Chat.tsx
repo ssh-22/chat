@@ -13,6 +13,8 @@ interface MessageProps extends MessageType {
   userId: string | null;
 }
 
+const WebSocketUrl =
+  process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:3001';
 const useWebSocket = (url: string) => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
@@ -82,7 +84,7 @@ const Chat: React.FC = () => {
   const [_previousScrollTop, setPreviousScrollTop] = useState<
     number | undefined
   >(undefined);
-  const { messages, userId, sendMessage } = useWebSocket('ws://localhost:3001');
+  const { messages, userId, sendMessage } = useWebSocket(WebSocketUrl);
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
   const [isFocused, setFocused] = useState(false);
