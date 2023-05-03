@@ -3,23 +3,18 @@ import './Chat.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-interface Message {
+interface MessageType {
   authorId: string;
   authorName: string;
   content: string;
 }
 
-interface MessageProps extends Message {
+interface MessageProps extends MessageType {
   userId: string | null;
 }
 
-interface UserData {
-  type: string;
-  userId: string;
-}
-
 const useWebSocket = (url: string) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const websocket = useRef<WebSocket | null>(null);
 
@@ -50,7 +45,7 @@ const useWebSocket = (url: string) => {
     };
   }, [url]);
 
-  const sendMessage = (message: Message) => {
+  const sendMessage = (message: MessageType) => {
     if (websocket.current) {
       websocket.current.send(JSON.stringify(message));
     }
@@ -90,6 +85,7 @@ const Chat: React.FC = () => {
   const { messages, userId, sendMessage } = useWebSocket('ws://localhost:3001');
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
+  const [isFocused, setFocused] = useState(false);
 
   useEffect(() => {
     if (messageListRef.current) {
@@ -102,7 +98,7 @@ const Chat: React.FC = () => {
 
     if (inputMessage.trim() === '') return;
 
-    const message: Message = {
+    const message: MessageType = {
       content: inputMessage,
       authorName: 'User',
       authorId: '',
@@ -121,7 +117,11 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className='chat-container' data-testid='chat-container'>
+    <div
+      className='chat-container'
+      data-testid='chat-container'
+      style={isFocused ? { paddingBottom: '270px' } : { paddingBottom: '0' }}
+    >
       <header className='chat-header'>
         <h1 className='chat-title'>チャット</h1>
         <div className='header-actions'>
@@ -149,6 +149,13 @@ const Chat: React.FC = () => {
               handleSendMessage(e);
             }
           }}
+          onFocus={() => {
+            setFocused(true);
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+            }, 200);
+          }}
+          onBlur={() => setFocused(false)}
           data-testid='textarea'
           rows={rows}
         />
