@@ -182,8 +182,10 @@ const Chat: React.FC = () => {
             setFocused(true);
             setTimeout(() => {
               window.scrollTo(0, 0);
-              const element = document.querySelector("#root > div > div > ul") as Element;
-              element.scrollTop = element.scrollHeight
+              const element = document.querySelector('#root > div > div > ul');
+              if (element) {
+                element.scrollTop = element.scrollHeight;
+              }
             }, 200);
           }}
           onBlur={() => {
