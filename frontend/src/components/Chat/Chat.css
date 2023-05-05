@@ -121,12 +121,14 @@ button[type='submit'] {
 
 .timestamp {
   display: block;
+  position: absolute;
+  bottom: 0;
 }
 
 .timestamp-me {
-  text-align: left;
+  right: 0;
 }
 
 .timestamp-others {
-  text-align: right;
+  left: 0;
 }

@@ -80,15 +80,13 @@ const Message: React.FC<MessageProps> = ({
           />
         </div>
       )}
-      <div className='message-content'>
-        {content}
-        <span
-          className={`timestamp ${isMe ? 'timestamp-me' : 'timestamp-others'}`}
-          style={{ fontSize: '1pt' }}
-        >
-          {formattedTimestamp}
-        </span>
-      </div>
+      <div className='message-content'>{content}</div>
+      <span
+        className={`timestamp ${isMe ? 'timestamp-me' : 'timestamp-others'}`}
+        style={{ fontSize: '1pt' }}
+      >
+        {formattedTimestamp}
+      </span>
     </li>
   );
 };
