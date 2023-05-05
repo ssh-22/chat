@@ -32,7 +32,7 @@
   flex-direction: column;
   border: 1px solid #ccc;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  background-color: #4f83e1;
+  background-color: #7899C6;
   overflow-y: hidden;
 }
 
@@ -76,7 +76,7 @@ button[type='submit'] {
   overflow-y: auto;
 }
 
-.messages-list > *:last-child {
+.messages-list>*:last-child {
   margin-bottom: 10px;
 }
 
