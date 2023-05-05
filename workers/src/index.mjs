@@ -49,6 +49,7 @@ export class ChatRoom {
       server.addEventListener('message', async (event) => {
         const data = JSON.parse(event.data);
         data.authorId = userId;
+        data.timestamp = Date.now();
         await this.storeMessage(data);
         this.broadcast(data);
       });

@@ -118,3 +118,15 @@ button[type='submit'] {
 .message-item.me .user-icon {
   display: none;
 }
+
+.timestamp {
+  display: block;
+}
+
+.timestamp-me {
+  text-align: left;
+}
+
+.timestamp-others {
+  text-align: right;
+}

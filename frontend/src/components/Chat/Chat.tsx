@@ -7,6 +7,7 @@ interface MessageType {
   authorId: string;
   authorName: string;
   content: string;
+  timestamp: number;
 }
 
 interface MessageProps extends MessageType {
@@ -61,8 +62,13 @@ const Message: React.FC<MessageProps> = ({
   authorName,
   authorId,
   userId,
+  timestamp,
 }) => {
   const isMe = authorId === userId;
+  const formattedTimestamp = new Date(timestamp).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
   return (
     <li className={`message-item ${isMe ? 'me' : 'others'}`}>
       {!isMe && (
@@ -74,7 +80,15 @@ const Message: React.FC<MessageProps> = ({
           />
         </div>
       )}
-      <div className='message-content'>{content}</div>
+      <div className='message-content'>
+        {content}
+        <span
+          className={`timestamp ${isMe ? 'timestamp-me' : 'timestamp-others'}`}
+          style={{ fontSize: '1pt' }}
+        >
+          {formattedTimestamp}
+        </span>
+      </div>
     </li>
   );
 };
@@ -104,6 +118,7 @@ const Chat: React.FC = () => {
       content: inputMessage,
       authorName: 'User',
       authorId: '',
+      timestamp: 0,
     };
     sendMessage(message);
     setInputMessage('');
