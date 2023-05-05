@@ -69,24 +69,26 @@ const Message: React.FC<MessageProps> = ({
     hour: '2-digit',
     minute: '2-digit',
   });
+  const timestampElement = (
+    <div className='timestamp'>
+      <span style={{ fontSize: '8pt' }}>{formattedTimestamp}</span>
+    </div>
+  );
+  const messageAvatarElement = (
+    <div className='message-avatar'>
+      <img
+        className='user-icon'
+        src={`https://i.pravatar.cc/300?u=${authorId}`}
+        alt='avatar'
+      />
+    </div>
+  );
   return (
     <li className={`message-item ${isMe ? 'me' : 'others'}`}>
-      {!isMe && (
-        <div className='message-avatar'>
-          <img
-            className='user-icon'
-            src={`https://i.pravatar.cc/300?u=${authorId}`}
-            alt='avatar'
-          />
-        </div>
-      )}
+      {isMe && timestampElement}
+      {!isMe && messageAvatarElement}
       <div className='message-content'>{content}</div>
-      <span
-        className={`timestamp ${isMe ? 'timestamp-me' : 'timestamp-others'}`}
-        style={{ fontSize: '1pt' }}
-      >
-        {formattedTimestamp}
-      </span>
+      {!isMe && timestampElement}
     </li>
   );
 };

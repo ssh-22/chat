@@ -83,6 +83,7 @@ button[type='submit'] {
 .message-item {
   display: flex;
   margin-top: 10px;
+  align-items: center;
 }
 
 .message-item.others {
@@ -92,6 +93,10 @@ button[type='submit'] {
 .message-item.me {
   justify-content: flex-end;
   margin-right: 10px;
+}
+
+.message-avatar {
+  align-self: flex-start;
 }
 
 .message-avatar img {
@@ -120,15 +125,7 @@ button[type='submit'] {
 }
 
 .timestamp {
-  display: block;
-  position: absolute;
-  bottom: 0;
-}
-
-.timestamp-me {
-  right: 0;
-}
-
-.timestamp-others {
-  left: 0;
+  padding: 5px;
+  align-self: flex-end;
+  color: #555555;
 }
