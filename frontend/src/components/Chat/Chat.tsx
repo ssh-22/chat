@@ -95,7 +95,7 @@ const Message: React.FC<MessageProps> = ({
 };
 
 const Chat: React.FC = () => {
-  const messageListRef = useRef<HTMLUListElement>(null);
+  const messageListRef = useRef<HTMLDivElement>(null);
   const [_previousScrollTop, setPreviousScrollTop] = useState<
     number | undefined
   >(undefined);
@@ -135,6 +135,15 @@ const Chat: React.FC = () => {
     sendMessage(message);
     setInputMessage('');
     setPreviousScrollTop(messageListRef.current?.scrollTop);
+    // window.scrollTo(0, document.body.scrollHeight)
+    // const element = document.querySelector("#root > div > div > main")
+    const element = document.querySelector("#root > div > div > main")
+    console.log(element)
+    if (element) {
+      // console.log(element.scrollTop)
+      element.scrollTop = element.scrollHeight + 10;
+      // console.log(element.scrollTop)
+    }
   };
 
   const handleInputMessageChange = (
@@ -146,11 +155,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div
-      className='chat-container'
-      data-testid='chat-container'
-      style={isFocused ? { paddingBottom: '270px' } : { paddingBottom: '0' }}
-    >
+    <div className='chat-container' data-testid='chat-container'>
       <header className='chat-header'>
         <h1 className='chat-title'>チャット</h1>
         <div className='header-actions'>
@@ -159,45 +164,49 @@ const Chat: React.FC = () => {
           </button>
         </div>
       </header>
-      <ul className='messages-list' ref={messageListRef}>
-        {messages.map((message, index) => (
-          <Message key={index} {...message} userId={userId} />
-        ))}
-      </ul>
-      <form
-        className='input-form'
-        onSubmit={handleSendMessage}
-        data-testid='input-form'
-      >
-        <textarea
-          value={inputMessage}
-          onChange={handleInputMessageChange}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSendMessage(e);
-            }
-          }}
-          onFocus={() => {
-            setFocused(true);
-            setTimeout(() => {
-              window.scrollTo(0, 0);
-              const element = document.querySelector('#root > div > div > ul');
-              if (element) {
-                element.scrollTop = element.scrollHeight;
+      <div className="messages-main" ref={messageListRef}>
+        <ul className='messages-list'>
+          {messages.map((message, index) => (
+            <Message key={index} {...message} userId={userId} />
+          ))}
+        </ul>
+      </div>
+      <footer className='input-footer'>
+        <form
+          className='input-form'
+          onSubmit={handleSendMessage}
+          data-testid='input-form'
+        >
+          <textarea
+            value={inputMessage}
+            onChange={handleInputMessageChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage(e);
               }
-            }, 200);
-          }}
-          onBlur={() => {
-            setFocused(false);
-          }}
-          data-testid='textarea'
-          rows={rows}
-        />
-        <button type='submit' data-testid='submit'>
-          <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
-        </button>
-      </form>
+            }}
+            onFocus={() => {
+              setFocused(true);
+              // setTimeout(() => {
+              // window.scrollTo(0, 0);
+              // const element = document.querySelector('#root > div > div > ul');
+              // if (element) {
+              //   element.scrollTop = element.scrollHeight;
+              // }
+              // }, 200);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+            data-testid='textarea'
+            rows={rows}
+          />
+          <button type='submit' data-testid='submit'>
+            <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+          </button>
+        </form>
+      </footer>
     </div>
   );
 };
