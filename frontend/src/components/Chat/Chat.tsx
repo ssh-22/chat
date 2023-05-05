@@ -95,14 +95,10 @@ const Message: React.FC<MessageProps> = ({
 };
 
 const Chat: React.FC = () => {
-  const messageListRef = useRef<HTMLDivElement>(null);
-  const [_previousScrollTop, setPreviousScrollTop] = useState<
-    number | undefined
-  >(undefined);
+  const messageMainRef = useRef<HTMLDivElement>(null);
   const { messages, userId, sendMessage } = useWebSocket(WebSocketUrl);
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
-  const [isFocused, setFocused] = useState(false);
 
   const today = new Date();
   const midnight = new Date(
@@ -114,12 +110,6 @@ const Chat: React.FC = () => {
     0,
   );
   const timestamp = midnight.getTime();
-
-  useEffect(() => {
-    if (messageListRef.current) {
-      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-    }
-  }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,16 +124,12 @@ const Chat: React.FC = () => {
     };
     sendMessage(message);
     setInputMessage('');
-    setPreviousScrollTop(messageListRef.current?.scrollTop);
-    // window.scrollTo(0, document.body.scrollHeight)
-    // const element = document.querySelector("#root > div > div > main")
-    const element = document.querySelector("#root > div > div > main")
-    console.log(element)
-    if (element) {
-      // console.log(element.scrollTop)
-      element.scrollTop = element.scrollHeight + 10;
-      // console.log(element.scrollTop)
-    }
+    setTimeout(() => {
+      if (messageMainRef.current) {
+        messageMainRef.current.scrollTop =
+          messageMainRef.current.scrollHeight + 10;
+      }
+    }, 100);
   };
 
   const handleInputMessageChange = (
@@ -164,7 +150,7 @@ const Chat: React.FC = () => {
           </button>
         </div>
       </header>
-      <div className="messages-main" ref={messageListRef}>
+      <div className='messages-main' ref={messageMainRef}>
         <ul className='messages-list'>
           {messages.map((message, index) => (
             <Message key={index} {...message} userId={userId} />
@@ -185,19 +171,6 @@ const Chat: React.FC = () => {
                 e.preventDefault();
                 handleSendMessage(e);
               }
-            }}
-            onFocus={() => {
-              setFocused(true);
-              // setTimeout(() => {
-              // window.scrollTo(0, 0);
-              // const element = document.querySelector('#root > div > div > ul');
-              // if (element) {
-              //   element.scrollTop = element.scrollHeight;
-              // }
-              // }, 200);
-            }}
-            onBlur={() => {
-              setFocused(false);
             }}
             data-testid='textarea'
             rows={rows}

@@ -1,14 +1,8 @@
 .chat-header {
+  position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  background-color: white;
-  height: 7vh;
-}
-
-.chat-header {
-  position: sticky;
   top: 0;
   background-color: white;
   padding: 1rem;
@@ -19,12 +13,8 @@
 .messages-main {
   flex-grow: 1;
   overflow-y: scroll;
-  padding: 1rem 0;
-  height: calc(100dvh - 60px - 60ox);
-  /* margin-bottom: 80px; */
-  padding-bottom: 90px;
+  padding-bottom: 60px;
 }
-
 
 .input-footer {
   background-color: #f8f9fa;
@@ -32,12 +22,16 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-form {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input-form textarea {
@@ -86,26 +80,6 @@
   height: 100dvh;
 }
 
-/* .input-form {
-  display: flex;
-  padding: 10px;
-  flex-shrink: 0;
-  background-color: white;
-  height: auto;
-}
-
-textarea {
-  flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0 10px;
-  font-size: 14px;
-  background-color: #f3efef;
-  resize: vertical;
-  overflow-y: auto;
-  height: fit-content;
-} */
-
 button[type='submit'] {
   background-color: transparent;
   color: white;
@@ -126,7 +100,7 @@ button[type='submit'] {
   overflow-y: scroll;
 }
 
-.messages-list>*:last-child {
+.messages-list > *:last-child {
   margin-bottom: 10px;
 }
 
