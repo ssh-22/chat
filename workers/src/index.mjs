@@ -27,6 +27,7 @@ async function handleRequest(request, env) {
 export class ChatRoom {
   constructor(state, env) {
     this.clients = new Map();
+    this.storage = state.storage;
   }
 
   async fetch(request, env) {
@@ -40,9 +41,15 @@ export class ChatRoom {
 
       server.send(JSON.stringify({ type: 'userId', userId }));
 
-      server.addEventListener('message', (event) => {
+      const storedMessages = await this.getStoredMessages();
+      for (const message of storedMessages) {
+        server.send(JSON.stringify(message));
+      }
+
+      server.addEventListener('message', async (event) => {
         const data = JSON.parse(event.data);
         data.authorId = userId;
+        await this.storeMessage(data);
         this.broadcast(data);
       });
 
@@ -62,6 +69,17 @@ export class ChatRoom {
     for (const client of this.clients.values()) {
       client.send(JSON.stringify(message));
     }
+  }
+
+  async storeMessage(message) {
+    const messages = await this.getStoredMessages();
+    messages.push(message);
+    await this.storage.put('messages', JSON.stringify(messages));
+  }
+
+  async getStoredMessages() {
+    const storedMessages = await this.storage.get('messages');
+    return storedMessages ? JSON.parse(storedMessages) : [];
   }
 }
 
