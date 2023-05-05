@@ -103,6 +103,17 @@ const Chat: React.FC = () => {
   const [rows, setRows] = useState(1);
   const [isFocused, setFocused] = useState(false);
 
+  const today = new Date();
+  const midnight = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    0,
+    0,
+    0,
+  );
+  const timestamp = midnight.getTime();
+
   useEffect(() => {
     if (messageListRef.current) {
       messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
@@ -118,7 +129,7 @@ const Chat: React.FC = () => {
       content: inputMessage,
       authorName: 'User',
       authorId: '',
-      timestamp: 0,
+      timestamp,
     };
     sendMessage(message);
     setInputMessage('');
