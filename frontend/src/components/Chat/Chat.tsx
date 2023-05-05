@@ -184,7 +184,10 @@ const Chat: React.FC = () => {
               window.scrollTo(0, 0);
             }, 200);
           }}
-          onBlur={() => setFocused(false)}
+          onBlur={() => {
+            setFocused(false);
+            setPreviousScrollTop(messageListRef.current?.scrollTop);
+          }}
           data-testid='textarea'
           rows={rows}
         />
