@@ -23,8 +23,7 @@ coverage
 .env
 
 # Dependency directory
-frontend/node_modules
-backend/node_modules
+*/node_modules
 
 # Editors
 .idea

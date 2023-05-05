@@ -1,0 +1,14 @@
+name = "chat"
+main = "src/index.mjs"
+compatibility_date = "2023-05-04"
+usage_model = "bundled"
+logpush = true
+
+[triggers]
+crons = [ ]
+[[migrations]]
+tag = "v1"
+new_classes = ["ChatRoom"]
+
+[durable_objects]
+bindings = [{ name = "CHAT_ROOM", class_name = "ChatRoom" }]
