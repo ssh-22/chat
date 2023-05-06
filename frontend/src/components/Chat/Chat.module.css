@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   top: 0;
-  background-color: white;
+  background-color: transparent;
   padding: 1rem;
   text-align: center;
   height: 60px;
@@ -33,6 +33,7 @@
 }
 
 .inputForm textarea {
+  font-size: 16px;
   flex-grow: 1;
   resize: none;
   border: 1px solid #ced4da;
@@ -50,21 +51,23 @@
 
 .chatTitle {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
 }
 
 .headerActions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
-.callButton {
+.headerBtn {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: #4f83e1;
   padding: 0;
-  margin: 0;
 }
 
 .chatContainer {
@@ -106,6 +109,7 @@ button[type='submit'] {
   display: flex;
   margin-top: 10px;
   align-items: center;
+  font-size: 16px;
 }
 
 .messageItem.others {

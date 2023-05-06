@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPhone,
+  faPaperPlane,
+  faChevronLeft,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon as ReactFontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Message from './Message';
 import useWebSocket from '../../hooks/useWebSocket';
 import styles from './Chat.module.css';
 import { MessageType } from '../../types/chatTypes';
+import LogoutButton from '../Auth/LogoutButton';
+import { WEB_SOCKET_URL } from '../../constants';
 
 const Chat: React.FC = () => {
-  const WebSocketUrl =
-    process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:3001';
   const messageMainRef = useRef<HTMLDivElement>(null);
-  const { messages, userId, sendMessage } = useWebSocket(WebSocketUrl);
+  const { messages, userId, sendMessage } = useWebSocket(WEB_SOCKET_URL);
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
 
@@ -64,11 +69,17 @@ const Chat: React.FC = () => {
   return (
     <div className={styles.chatContainer} data-testid='chat-container'>
       <header className={styles.chatHeader}>
-        <h1 className={styles.chatTitle}>チャット</h1>
         <div className={styles.headerActions}>
-          <button className={styles.callButton}>
-            <FontAwesomeIcon icon={faPhone} color='#4f83e1' size='lg' />
+          <button className={styles.headerBtn}>
+            <FontAwesomeIcon icon={faChevronLeft} color='black' size='lg' />
           </button>
+          <span className={styles.chatTitle}>大谷翔平</span>
+        </div>
+        <div className={styles.headerActions}>
+          <button className={styles.headerBtn}>
+            <FontAwesomeIcon icon={faPhone} color='black' size='lg' />
+          </button>
+          <LogoutButton className={styles.headerBtn} />
         </div>
       </header>
       <div className={styles.messagesMain} ref={messageMainRef}>
@@ -81,23 +92,21 @@ const Chat: React.FC = () => {
       <footer className={styles.inputFooter}>
         <form
           className={styles.inputForm}
-          onSubmit={handleSendMessage}
+          onSubmit={(e) => e.preventDefault()}
           data-testid='input-form'
         >
           <textarea
             value={inputMessage}
             onChange={handleInputMessageChange}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSendMessage(e);
-              }
-            }}
             data-testid='textarea'
             rows={rows}
           />
-          <button type='submit' data-testid='submit'>
-            <FontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+          <button
+            type='submit'
+            data-testid='submit'
+            onClick={handleSendMessage}
+          >
+            <ReactFontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
           </button>
         </form>
       </footer>
