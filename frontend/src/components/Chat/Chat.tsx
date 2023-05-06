@@ -5,7 +5,6 @@ import {
   faPaperPlane,
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon as ReactFontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Message from './Message';
 import useWebSocket from '../../hooks/useWebSocket';
 import styles from './Chat.module.css';
@@ -105,8 +104,13 @@ const Chat: React.FC = () => {
             type='submit'
             data-testid='submit'
             onClick={handleSendMessage}
+            disabled={inputMessage.length === 0}
           >
-            <ReactFontAwesomeIcon icon={faPaperPlane} color='blue' size='lg' />
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              style={{ color: inputMessage.length === 0 ? 'gray' : 'blue' }}
+              size='lg'
+            />
           </button>
         </form>
       </footer>
