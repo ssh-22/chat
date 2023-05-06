@@ -100,6 +100,10 @@ const Chat: React.FC = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [rows, setRows] = useState(1);
 
+  useEffect(() => {
+    scrollToLatestMessage();
+  }, [messages]);
+
   const today = new Date();
   const midnight = new Date(
     today.getFullYear(),
@@ -124,12 +128,6 @@ const Chat: React.FC = () => {
     };
     sendMessage(message);
     setInputMessage('');
-    setTimeout(() => {
-      if (messageMainRef.current) {
-        messageMainRef.current.scrollTop =
-          messageMainRef.current.scrollHeight + 10;
-      }
-    }, 100);
   };
 
   const handleInputMessageChange = (
@@ -138,6 +136,15 @@ const Chat: React.FC = () => {
     setInputMessage(e.target.value);
     const numLines = e.target.value.split('\n').length;
     setRows(numLines > 9 ? 9 : numLines);
+  };
+
+  const scrollToLatestMessage = () => {
+    setTimeout(() => {
+      if (messageMainRef.current) {
+        messageMainRef.current.scrollTop =
+          messageMainRef.current.scrollHeight + 10;
+      }
+    }, 100);
   };
 
   return (
