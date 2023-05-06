@@ -1,100 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Chat.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-
-interface MessageType {
-  authorId: string;
-  authorName: string;
-  content: string;
-  timestamp: number;
-}
-
-interface MessageProps extends MessageType {
-  userId: string | null;
-}
-
-const WebSocketUrl =
-  process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:3001';
-const useWebSocket = (url: string) => {
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
-  const websocket = useRef<WebSocket | null>(null);
-
-  useEffect(() => {
-    websocket.current = new WebSocket(url);
-
-    websocket.current.onopen = () => {
-      console.log('WebSocket connected');
-    };
-
-    websocket.current.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type) {
-        setUserId(data.userId);
-      } else {
-        setMessages((prevMessages) => [...prevMessages, data]);
-      }
-    };
-
-    websocket.current.onclose = () => {
-      console.log('WebSocket disconnected');
-    };
-
-    return () => {
-      if (websocket.current) {
-        websocket.current.close();
-      }
-    };
-  }, [url]);
-
-  const sendMessage = (message: MessageType) => {
-    if (websocket.current) {
-      websocket.current.send(JSON.stringify(message));
-    }
-  };
-
-  return { messages, userId, sendMessage };
-};
-
-const Message: React.FC<MessageProps> = ({
-  content,
-  authorName,
-  authorId,
-  userId,
-  timestamp,
-}) => {
-  const isMe = authorId === userId;
-  const formattedTimestamp = new Date(timestamp).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
-  const timestampElement = (
-    <div className='timestamp'>
-      <span style={{ fontSize: '8pt' }}>{formattedTimestamp}</span>
-    </div>
-  );
-  const messageAvatarElement = (
-    <div className='message-avatar'>
-      <img
-        className='user-icon'
-        src={`https://i.pravatar.cc/300?u=${authorId}`}
-        alt='avatar'
-      />
-    </div>
-  );
-  return (
-    <li className={`message-item ${isMe ? 'me' : 'others'}`}>
-      {isMe && timestampElement}
-      {!isMe && messageAvatarElement}
-      <div className='message-content'>{content}</div>
-      {!isMe && timestampElement}
-    </li>
-  );
-};
+import Message from './Message';
+import useWebSocket from '../../hooks/useWebSocket';
+import styles from './Chat.module.css';
+import { MessageType } from '../../types/chatTypes';
 
 const Chat: React.FC = () => {
+  const WebSocketUrl =
+    process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:3001';
   const messageMainRef = useRef<HTMLDivElement>(null);
   const { messages, userId, sendMessage } = useWebSocket(WebSocketUrl);
   const [inputMessage, setInputMessage] = useState('');
@@ -148,25 +62,25 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className='chat-container' data-testid='chat-container'>
-      <header className='chat-header'>
-        <h1 className='chat-title'>チャット</h1>
-        <div className='header-actions'>
-          <button className='call-button'>
+    <div className={styles.chatContainer} data-testid='chat-container'>
+      <header className={styles.chatHeader}>
+        <h1 className={styles.chatTitle}>チャット</h1>
+        <div className={styles.headerActions}>
+          <button className={styles.callButton}>
             <FontAwesomeIcon icon={faPhone} color='#4f83e1' size='lg' />
           </button>
         </div>
       </header>
-      <div className='messages-main' ref={messageMainRef}>
-        <ul className='messages-list'>
+      <div className={styles.messagesMain} ref={messageMainRef}>
+        <ul className={styles.messagesList}>
           {messages.map((message, index) => (
             <Message key={index} {...message} userId={userId} />
           ))}
         </ul>
       </div>
-      <footer className='input-footer'>
+      <footer className={styles.inputFooter}>
         <form
-          className='input-form'
+          className={styles.inputForm}
           onSubmit={handleSendMessage}
           data-testid='input-form'
         >

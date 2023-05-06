@@ -1,4 +1,4 @@
-.chat-header {
+.chatHeader {
   position: sticky;
   display: flex;
   justify-content: space-between;
@@ -10,13 +10,13 @@
   height: 60px;
 }
 
-.messages-main {
+.messagesMain {
   flex-grow: 1;
   overflow-y: scroll;
   padding-bottom: 80px;
 }
 
-.input-footer {
+.inputFooter {
   background-color: #f8f9fa;
   padding: 1rem;
   position: fixed;
@@ -24,17 +24,15 @@
   width: 100%;
   height: 50px;
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
 }
 
-.input-form {
+.inputForm {
   display: flex;
   align-items: flex-start;
   width: 100%;
 }
 
-.input-form textarea {
+.inputForm textarea {
   flex-grow: 1;
   resize: none;
   border: 1px solid #ced4da;
@@ -44,23 +42,23 @@
   max-width: calc(80% - 40px);
 }
 
-.input-form button {
+.inputForm button {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
-.chat-title {
+.chatTitle {
   margin: 0;
   font-size: 1.5rem;
 }
 
-.header-actions {
+.headerActions {
   display: flex;
   align-items: center;
 }
 
-.call-button {
+.callButton {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -69,7 +67,7 @@
   margin: 0;
 }
 
-.chat-container {
+.chatContainer {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -91,7 +89,7 @@ button[type='submit'] {
   font-size: 14px;
 }
 
-.messages-list {
+.messagesList {
   flex: 1;
   list-style-type: none;
   padding: 0;
@@ -100,37 +98,37 @@ button[type='submit'] {
   overflow-y: scroll;
 }
 
-.messages-list > *:last-child {
+.messagesList > *:last-child {
   margin-bottom: 10px;
 }
 
-.message-item {
+.messageItem {
   display: flex;
   margin-top: 10px;
   align-items: center;
 }
 
-.message-item.others {
+.messageItem.others {
   justify-content: flex-start;
 }
 
-.message-item.me {
+.messageItem.me {
   justify-content: flex-end;
   margin-right: 10px;
 }
 
-.message-avatar {
+.messageAvatar {
   align-self: flex-start;
 }
 
-.message-avatar img {
+.messageAvatar img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
   margin: 0 10px;
 }
 
-.message-content {
+.messageContent {
   background-color: #f0f0f0;
   border-radius: 15px;
   padding: 5px 10px;
@@ -140,11 +138,11 @@ button[type='submit'] {
   white-space: pre-wrap;
 }
 
-.message-item.me .message-content {
+.messageItem.me .messageContent {
   background-color: #85ff49;
 }
 
-.message-item.me .user-icon {
+.messageItem.me .userIcon {
   display: none;
 }
 
