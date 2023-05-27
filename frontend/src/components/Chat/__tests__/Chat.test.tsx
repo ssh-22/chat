@@ -45,8 +45,9 @@ describe('Chat', () => {
     expect(screen.queryByText('User:')).not.toBeInTheDocument();
   });
 
-  test('textarea accepts input', async () => {
+  test('textarea accepts input and send button clears textarea', async () => {
     const textArea = screen.getByTestId('textarea');
+    const sendButton = screen.getByTestId('submit');
     const testMessage = 'Hello, world!';
 
     fireEvent.change(textArea, { target: { value: testMessage } });
@@ -57,7 +58,7 @@ describe('Chat', () => {
       );
     });
 
-    fireEvent.keyDown(textArea, { key: 'Enter', code: 'Enter' });
+    fireEvent.click(sendButton);
 
     await waitFor(() => expect(textArea).toHaveValue(''));
   });
