@@ -1,6 +1,6 @@
 # Chat App
 
-This is a TypeScript-based chat app that allows users to have one-on-one or group conversations with LINE-style UI. The app includes messaging, voice calling, and video calling features.
+This is a TypeScript-based chat app that allows users to have group conversations with LINE-style UI. The app only includes a messaging feature.
 
 ## Technologies Used
 
@@ -13,16 +13,42 @@ To install the app, follow these steps:
 1. Clone this repository to your local machine.
 2. In the `frontend` directory, run `npm install` to install the necessary dependencies. Make sure you have Node.js version 16 installed.
 3. In the `backend` directory, run `npm install` to install the necessary dependencies. Make sure you have Node.js version 18 installed.
-4. To start the front-end, navigate to the `frontend` directory and run `npm start`.
-5. To start the back-end, navigate to the `backend` directory and run `npm start`.
+    1. Since the backend directory was used for local development only, you should use the `workers` directory for production.
+5. To start the front-end, navigate to the `frontend` directory and run `npm start`.
+6. To start the back-end, navigate to the `backend` directory and run `npm run dev`.
 
 If you don't have the correct version of Node.js installed, you can download it from the official website: https://nodejs.org/en/download/
 
+## Deployment
+
+### Backend
+
+To deploy the backend app, follow these steps:
+
+1. Sign Up for Cloudflare
+2. Subscribe to [Cloudflare Workers](https://www.cloudflare.com/products/workers/) Paid plan to enable Durable Objects
+3. Create a durable object
+4. Deploy `workers` to Cloudflare workers
+5. Make sure the frontend app connect with the backend app
+
+### Frontend
+
+To deploy the frontend app, follow these steps:
+
+1. Use hosting service such as [Cloudflare pages](https://pages.cloudflare.com/).
+2. Sign Up for [Auth0](https://auth0.com/) to obtain CLIENT_ID and DOMAIN for the frontend app
+3. Sign Up for [Google API](https://console.developers.google.com/apis/dashboard) to obtain Client id and secret for Auth0 Google login authentication
+4. Set the following environment variables through deploy
+    1. `REACT_APP_CLIENT_ID`: Obtain CLIENT_ID from Auth0
+    2. `REACT_APP_DOMAIN`: Obtain DOMAIN from Auth0
+    3. `REACT_APP_WEBSOCKET_URL`: your production WebSocket URL ending with '/wss'
+5. Deploy the frontend app
+6. Make sure you can send and receive messages via Chat
+
 ## Usage
 
-Once the app is installed, users can use it to have one-on-one or group conversations, as well as voice and video calls. The UI is designed to resemble the LINE chat app.
+Once the app is installed, users can use it to have group conversations. The UI is designed to resemble the LINE chat app.    
 
-<div>
-    <img width="390" alt="React_App" src="https://user-images.githubusercontent.com/50019567/235284204-0d2ad869-c1a5-4027-9dce-3fea38a3167d.png">
-    <img width="389" alt="React_App1" src="https://user-images.githubusercontent.com/50019567/235284209-b615eba9-1c63-4675-b7cf-b22c729ba901.png">
-</div>
+https://github.com/ssh-22/chat/assets/50019567/9eb3c520-f8b8-4368-b33f-26f76a998fad
+
+https://github.com/ssh-22/chat/assets/50019567/51ca84d2-ce28-4106-b6b2-069d97ca244e
