@@ -2,6 +2,10 @@
 
 This is a TypeScript-based chat app that allows users to have group conversations with LINE-style UI. The app only includes a messaging feature.
 
+https://github.com/ssh-22/chat/assets/50019567/8d9c7809-b0b2-42d5-8779-62f360658677
+
+https://github.com/ssh-22/chat/assets/50019567/f08670cd-e0c1-4360-a18a-1050b21c7069
+
 ## Technologies Used
 
 The server-side of the app is built using `Node.js`, `Express`, `ws`, and `TypeScript`,while the front-end is built with `React` and `TypeScript`. The version of Node.js used for the backend is 18 and 16 for the front-end.
@@ -48,9 +52,3 @@ To deploy the frontend app, follow these steps:
 ## Usage
 
 Once the app is installed, users can use it to have group conversations. The UI is designed to resemble the LINE chat app.    
-
-
-
-https://github.com/ssh-22/chat/assets/50019567/8d9c7809-b0b2-42d5-8779-62f360658677
-
-https://github.com/ssh-22/chat/assets/50019567/f08670cd-e0c1-4360-a18a-1050b21c7069
