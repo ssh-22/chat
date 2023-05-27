@@ -49,6 +49,8 @@ To deploy the frontend app, follow these steps:
 
 Once the app is installed, users can use it to have group conversations. The UI is designed to resemble the LINE chat app.    
 
-https://github.com/ssh-22/chat/assets/50019567/9eb3c520-f8b8-4368-b33f-26f76a998fad
 
-https://github.com/ssh-22/chat/assets/50019567/51ca84d2-ce28-4106-b6b2-069d97ca244e
+
+https://github.com/ssh-22/chat/assets/50019567/8d9c7809-b0b2-42d5-8779-62f360658677
+
+https://github.com/ssh-22/chat/assets/50019567/f08670cd-e0c1-4360-a18a-1050b21c7069
